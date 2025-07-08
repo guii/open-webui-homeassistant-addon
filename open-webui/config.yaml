@@ -5,12 +5,13 @@ version: "v0.6.15"
 slug: "openwebui"
 panel_icon: mdi:message
 init: false
+ingress: true
+ingress_entry: "openwebui"
 
 arch:
   - aarch64
   - amd64
 startup: services
-webui: "[PROTO:ssl]://[HOST]:[PORT:8080]"
 host_network: true
 ports:
   8080/tcp: 8080
@@ -18,6 +19,13 @@ ports_description:
   8080/tcp: "Open WebUI Web Interface"
 map:
   - share
-options: {}
-schema: {}
+options:
+  PGID: 0
+  PUID: 0
+  connection_mode: "ingress_noauth"
+schema:
+  PGID: "int"
+  PUID: "int"
+  TZ: "str?"
+  connection_mode: "list(ingress_noauth|noingress_auth|ingress_auth)"
 image: ghcr.io/mikastamm/open-webui-homeassistant-addon
