@@ -13,10 +13,16 @@ export DATA_DIR="/data"
 export HOST="0.0.0.0"
 export PORT="8080"
 
+# Configure for Home Assistant ingress
+export WEBUI_BASE_URL="/api/hassio_ingress/$(bashio::addon.slug)"
+export WEBUI_AUTH=False
+export ENABLE_SIGNUP=False
+
 bashio::log.info "Starting Open WebUI..."
 bashio::log.info "HOST: ${HOST}"
 bashio::log.info "PORT: ${PORT}"
 bashio::log.info "DATA_DIR: ${DATA_DIR}"
+bashio::log.info "WEBUI_BASE_URL: ${WEBUI_BASE_URL}"
 
 # Start Open WebUI
 exec python -m open_webui.main
