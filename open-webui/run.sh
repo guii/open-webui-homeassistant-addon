@@ -19,9 +19,9 @@ case "${CONNECTION_MODE}" in
         bashio::log.info "Configuring for Home Assistant ingress (no auth)"
         # Set environment variables for ingress mode
         export WEBUI_AUTH=False
-        export WEBUI_BASE_URL="/api/hassio_ingress/$(bashio::addon.slug)"
-        export WEBUI_HOST="0.0.0.0"
-        export WEBUI_PORT="8080"
+        export WEBUI_URL="/api/hassio_ingress/$(bashio::addon.slug)"
+        export HOST="0.0.0.0"
+        export PORT="8080"
         # Additional Open WebUI specific settings for ingress
         export ENABLE_SIGNUP=False
         export WEBUI_SECRET_KEY="$(openssl rand -hex 32)"
@@ -29,29 +29,29 @@ case "${CONNECTION_MODE}" in
     "ingress_auth")
         bashio::log.info "Configuring for Home Assistant ingress (with auth)"
         export WEBUI_AUTH=True
-        export WEBUI_BASE_URL="/api/hassio_ingress/$(bashio::addon.slug)"
-        export WEBUI_HOST="0.0.0.0"
-        export WEBUI_PORT="8080"
+        export WEBUI_URL="/api/hassio_ingress/$(bashio::addon.slug)"
+        export HOST="0.0.0.0"
+        export PORT="8080"
         export WEBUI_SECRET_KEY="$(openssl rand -hex 32)"
         ;;
     "noingress_auth")
         bashio::log.info "Configuring for direct access (with auth)"
         export WEBUI_AUTH=True
-        export WEBUI_HOST="0.0.0.0"
-        export WEBUI_PORT="8080"
+        export HOST="0.0.0.0"
+        export PORT="8080"
         ;;
     *)
         bashio::log.warning "Unknown connection mode: ${CONNECTION_MODE}, using default"
-        export WEBUI_HOST="0.0.0.0"
-        export WEBUI_PORT="8080"
+        export HOST="0.0.0.0"
+        export PORT="8080"
         ;;
 esac
 
 # Debug: Print environment variables
 bashio::log.info "Environment variables:"
-bashio::log.info "WEBUI_HOST: ${WEBUI_HOST}"
-bashio::log.info "WEBUI_PORT: ${WEBUI_PORT}"
-bashio::log.info "WEBUI_BASE_URL: ${WEBUI_BASE_URL}"
+bashio::log.info "HOST: ${HOST}"
+bashio::log.info "PORT: ${PORT}"
+bashio::log.info "WEBUI_URL: ${WEBUI_URL}"
 bashio::log.info "WEBUI_AUTH: ${WEBUI_AUTH}"
 
 # Start Open WebUI
