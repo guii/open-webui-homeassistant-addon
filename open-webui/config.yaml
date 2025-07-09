@@ -6,8 +6,7 @@ slug: "openwebui"
 panel_icon: mdi:message
 init: false
 ingress: true
-ingress_entry: "openwebui"
-panel_iframe: true
+ingress_port: 8080
 
 arch:
   - aarch64
@@ -22,10 +21,8 @@ map:
 options:
   PGID: 0
   PUID: 0
-  connection_mode: "ingress_noauth"
 schema:
   PGID: "int"
   PUID: "int"
   TZ: "str?"
-  connection_mode: "list(ingress_noauth|noingress_auth|ingress_auth)"
 image: ghcr.io/mikastamm/open-webui-homeassistant-addon
