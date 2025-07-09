@@ -19,9 +19,10 @@ case "${CONNECTION_MODE}" in
         bashio::log.info "Configuring for Home Assistant ingress (no auth)"
         # Set environment variables for ingress mode
         export WEBUI_AUTH=False
-        export WEBUI_URL="/api/hassio_ingress/$(bashio::addon.slug)"
+        export WEBUI_BASE_URL="/api/hassio_ingress/$(bashio::addon.slug)"
         export HOST="0.0.0.0"
         export PORT="8080"
+        export DATA_DIR="/data"
         # Additional Open WebUI specific settings for ingress
         export ENABLE_SIGNUP=False
         export WEBUI_SECRET_KEY="$(openssl rand -hex 32)"
@@ -29,9 +30,10 @@ case "${CONNECTION_MODE}" in
     "ingress_auth")
         bashio::log.info "Configuring for Home Assistant ingress (with auth)"
         export WEBUI_AUTH=True
-        export WEBUI_URL="/api/hassio_ingress/$(bashio::addon.slug)"
+        export WEBUI_BASE_URL="/api/hassio_ingress/$(bashio::addon.slug)"
         export HOST="0.0.0.0"
         export PORT="8080"
+        export DATA_DIR="/data"
         export WEBUI_SECRET_KEY="$(openssl rand -hex 32)"
         ;;
     "noingress_auth")
@@ -39,11 +41,13 @@ case "${CONNECTION_MODE}" in
         export WEBUI_AUTH=True
         export HOST="0.0.0.0"
         export PORT="8080"
+        export DATA_DIR="/data"
         ;;
     *)
         bashio::log.warning "Unknown connection mode: ${CONNECTION_MODE}, using default"
         export HOST="0.0.0.0"
         export PORT="8080"
+        export DATA_DIR="/data"
         ;;
 esac
 
@@ -51,7 +55,7 @@ esac
 bashio::log.info "Environment variables:"
 bashio::log.info "HOST: ${HOST}"
 bashio::log.info "PORT: ${PORT}"
-bashio::log.info "WEBUI_URL: ${WEBUI_URL}"
+bashio::log.info "WEBUI_BASE_URL: ${WEBUI_BASE_URL}"
 bashio::log.info "WEBUI_AUTH: ${WEBUI_AUTH}"
 
 # Start Open WebUI
